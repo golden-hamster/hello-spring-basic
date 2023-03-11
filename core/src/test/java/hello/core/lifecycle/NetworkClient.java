@@ -1,12 +1,14 @@
 package hello.core.lifecycle;
 
+
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+
 public class NetworkClient {
 
     private String url;
 
     public NetworkClient() {
-        System.out.println("생성자 호출, url = " + url);
-        connect();
         call("초기화 연결 메시지");
 
     }
@@ -29,4 +31,15 @@ public class NetworkClient {
         System.out.println("close: " + url);
     }
 
+    @PostConstruct
+    public void init() {
+        System.out.println("NetworkClient.init");
+        System.out.println("생성자 호출, url = " + url);
+        connect();
+    }
+    @PreDestroy
+    public void close() {
+        System.out.println("NetworkClient.close");
+        disconnect();
+    }
 }
